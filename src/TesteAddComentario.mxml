@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" initialize="initApp()">
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			
+			
+			public function initDgComentario():void
+			{
+				var comentario:Array = new Array();
+				comentario.push({nome: "Teste", descricao: "Esse é um teste java script flex"});				
+				var comentarios:ArrayCollection = 	new ArrayCollection(comentario);
+				dgComentario.dataProvider = comentarios;
+				dgComentario.selectedIndex = 0;
+			}
+			
+			public function initApp():void
+			{
+				if (ExternalInterface.available)
+					ExternalInterface.addCallback("addComentario", addComentario);	
+			}
+			
+			private function addComentario(nome:String, descricao:String):void
+			{
+				(dgComentario.dataProvider as ArrayCollection).addItem({nome: nome, descricao: descricao});
+				(dgComentario.dataProvider as ArrayCollection).refresh();
+				
+			}
+			
+			public function showComentario():void
+			{
+				if (ExternalInterface.available) {
+					ExternalInterface.call("showComentario", dgComentario.selectedItem);	
+					Alert.show("Agora fui!!!","Olha lá");
+				} else
+					Alert.show("Fudeu, deu algum error!!!","Puts!!!");
+			}		
+			
+			public function showComentarioIframe():void
+			{				
+				if (ExternalInterface.available) {
+					ExternalInterface.call("parent.showComentarioIframe", dgComentario.selectedItem);	
+					Alert.show("Agora fui!!!","Olha lá");
+				} else
+					Alert.show("Fudeu, deu algum error!!!","Puts!!!");
+			}	
+			
+			
+			protected function myFunction(event:MouseEvent):void
+			{
+				if (ExternalInterface.available) {
+					ExternalInterface.call("myFunction");	
+					Alert.show("Agora fui!!!","Olha lá");
+				} else
+					Alert.show("Fudeu, deu algum error!!!","Puts!!!");
+				
+			}
+			
+			
+			protected function myFunctionIframe(event:MouseEvent):void
+			{
+				if (ExternalInterface.available) {
+					ExternalInterface.marshallExceptions = true;
+					ExternalInterface.addCallback("g", g);
+					
+					try {
+						ExternalInterface.call("parent.myFunctionIframe");
+					} catch(e:Error) {
+						trace(e)
+					}
+				}
+				
+				function g() { throw new Error("exception from actionscript!!!!") }
+				
+			}			
+			
+		]]>
+	</mx:Script>
+	<mx:DataGrid id="dgComentario" initialize="initDgComentario()" width="100%" height="100%" doubleClickEnabled="true" doubleClick="showComentario()">
+		<mx:columns>
+			<mx:DataGridColumn dataField="nome" headerText="Nome"/>
+			<mx:DataGridColumn dataField="descricao" headerText="Descrição"/>
+		</mx:columns>
+	</mx:DataGrid>
+	<mx:HBox width="100%">
+		<mx:Button label="Abrir url"  click="myFunction(event)"/>
+		<mx:Button label="Abrir url do iframe"  click="myFunctionIframe(event)"/>
+		<mx:Button label="Visualizar do iframe"  click="showComentarioIframe()"/>
+		
+	</mx:HBox>
+	
+</mx:Application>

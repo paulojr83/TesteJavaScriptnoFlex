@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="assets/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	
+  </head>
+<body>
+
+<div class="panel panel-default">
+  <!-- <iframe src="file:///C:/workspace/TesteJavaScript/bin-debug/TesteAddComentario.html" data-id="flex" class="hide"></iframe> -->
+  <iframe src="file:///C:/workspace/TesteJavaScript/bin-debug/TesteAddComentario.html" id="flex" ></iframe> 
+  <div class="panel-body">
+	<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+		id="TesteAddComentario" width="482" height="348"
+		codebase="http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab">
+		<param name="movie" value="TesteAddComentario.swf" />
+		<param name="quality" value="high" />
+		<param name="bgcolor" value="#869ca7" />
+		<param name="allowScriptAccess" value="sameDomain" />
+		<embed src="TesteAddComentario.swf" quality="high" bgcolor="#869ca7"
+			width="482" height="348" name="TesteAddComentario" align="middle"
+			play="true"
+			loop="false"
+			quality="high"
+			allowScriptAccess="sameDomain"
+			type="application/x-shockwave-flash"
+			pluginspage="http://www.adobe.com/go/getflashplayer">
+		</embed>
+	</object>
+  </div>  
+</div>
+
+<div class="panel panel-info">
+<h2>Aqui esta vindo do flex!!!</h2>
+<ul class="list-group">
+  <li class="list-group-item"><label id="lblNome"></label></li>
+  <li class="list-group-item"><label id="lblDescricao"></label></li>
+</ul>
+</div>
+
+
+<div class="panel panel-warning">
+<h2>Mandando para o flex!!!</h2>
+<form>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Nome</label>
+    <input id="txtNome" type="text" class="form-control" placeholder="Nome">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Descrição</label>
+    <input id="txtDescricao" type="text" class="form-control" placeholder="Descrição">
+  </div>
+  <input type="button" class="btn btn-success" onclick="addComentario()" value="Enviar" />
+</form>
+</div>
+
+
+<script src="assets/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    
+    <script language="javascript">
+	function getFlexApp(appName) {		
+		//var obj= document.getElementById("flex");
+		//if( obj!= null ){
+		//return obj;	
+		//}else{
+
+			if (navigator.appName.indexOf ("Microsoft") !=-1) {
+				obj = window[appName]
+				return obj;
+			} else {
+				obj = document[appName]
+				return obj;
+			}
+		//}			
+		
+	}
+	
+	function showComentario(obj){
+			if(obj == null){ 
+				alert("Eitah porra!!!");
+			}
+			else{
+				document.getElementById('lblNome').innerHTML = obj.nome;
+				document.getElementById('lblDescricao').innerHTML = obj.descricao;				
+			}
+	}
+
+	function showComentarioIframe(obj){
+		if(obj == null){ 
+			alert("Eitah porra!!!");
+		}
+		else{
+			document.getElementById('lblNome').innerHTML = obj.nome;
+			document.getElementById('lblDescricao').innerHTML = obj.descricao;				
+		}
+}
+	
+	function addComentario(){
+		var nome 	 = document.getElementById('txtNome').value;		
+		var descicao = document.getElementById('txtDescricao').value;
+		getFlexApp('TesteAddComentario').addComentario(nome, descicao);
+			
+	}
+
+	function myFunction() {
+	    window.open("https://www.w3schools.com");
+	}
+
+	function myFunctionIframe() {
+	    window.open("https://www.w3schools.com");
+	}
+	
+	function sendTest(text) {
+	    alert(text)
+	}
+	
+	
+	</script>
+  </body>
+</html>
